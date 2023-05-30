@@ -1,0 +1,92 @@
+
+public class OptimalStrategy extends GreedStrategy{
+    public int choose(GreedOption[] options, int[] dice, int bank) {
+    	/*for (int a : dice) {
+    		System.out.print(a);
+    	}
+    	System.out.println();*/
+
+    	for (int i =0; i<options.length; i++) {
+ 
+    		if (options[i].optionType()==GreedOption.ROLLAGAIN && dice.length > 3) {
+    			return i;
+    		}
+    		
+    	}
+    	
+        int maxPointValue = 0;
+        int maxPointValueIndex = -1;
+
+        for (int i = 0; i < options.length; i++) {
+            GreedOption option = options[i];
+            if (option.optionType() == GreedOption.SCORE) {
+                int pointValue = calculatePoints(dice, bank);
+                if (pointValue > maxPointValue) {
+                    maxPointValue = pointValue;
+                    maxPointValueIndex = i;
+                }
+            }
+        }
+        
+        return maxPointValueIndex;
+    }
+    
+    private int calculatePoints(int[] dice, int bank) {
+    	int points = 0;
+    	int[] nums = new int[6];
+    	for (int i = 0; i<nums.length; i++) {
+    		for (int a : dice) {
+    			if (a == i+1) {
+    				nums[i]++;
+    			}
+    		}
+    	}
+    	for (int i = 0; i<nums.length; i++) {
+    		// 6 of a kind
+    		if (nums[i]==6) {
+    			return 5000;
+    		}	
+    	}
+    	
+    	
+    	for (int j = 0; j<=3; j++) {
+			if (nums[j]==2) {
+				if (nums[j+1]==2) {
+					if (nums[j+2]==2) {
+						return 2000;
+					}
+				}
+			}
+		}
+		
+    	boolean check = true;
+		for (int j = 0; j<nums.length; j++) {
+			if (nums[j]!=1) {
+				check=false;
+			}
+		}
+		if (check) {
+			return 1000;
+		}
+		
+		if (nums[0]==4) {
+			return 1000;
+		}
+		
+		for (int i = 1; i<nums.length; i++) {
+			if (nums[i]==3) {
+				return (i+1)*100;
+			}
+		}
+		
+		if (nums[0]>0) {
+			return nums[0] * 100;
+		}
+		
+		if (nums[4]>0) {
+			return nums[4] * 50;
+		}
+		
+		return 0;
+    }
+}
