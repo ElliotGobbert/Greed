@@ -1,20 +1,20 @@
-public class OptimalStrategy extends GreedStrategy{
-    public int choose(GreedOption[] options, int[] dice, int bank) {
+public class OptimalStrategy extends GreedStrategy{ 
+	public int choose(GreedOption[] options, int[] dice, int bank) {
 	    	/*for (int a : dice) {
 	    		System.out.print(a);
 	    	}
 	    	System.out.println();*/
 
 	    	for (int i =0; i<options.length; i++) {
-	 
-	    		if (options[i].optionType()==GreedOption.ROLLAGAIN && dice.length > 3) {
-	    			return i;
+	    		if (calculatePoints(dice)<200) {
+		    		if (options[i].optionType()==GreedOption.ROLLAGAIN && dice.length > 3) {
+		    			return i;
+		    		} else if (options[i].optionType()==GreedOption.ENDTURN && dice.length<2 && calculatePoints(dice)==0) {
+		    			return i;
+		    		}
 	    		}
-	    		
 	    	}
-	    	
-	        int maxPointValue = 0;
-	        int maxPointValueIndex = -1;
+	    
 
 	        for (int i = 0; i < options.length; i++) {
 	            GreedOption option = options[i];
@@ -23,11 +23,12 @@ public class OptimalStrategy extends GreedStrategy{
 	            }
 	        }
 	        
-	        return maxPointValueIndex;
+	        return options.length;
     }
     
-    private int calculatePoints(int[] dice, int bank) {
-    	int points = 0;
+
+    
+    private int calculatePoints(int[] dice) {
     	int[] nums = new int[6];
     	for (int i = 0; i<nums.length; i++) {
     		for (int a : dice) {
