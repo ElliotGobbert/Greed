@@ -1,4 +1,4 @@
-public class OptimalStrategy extends GreedStrategy{ 
+public class VempalleYuPawarGobbertGreedStrategy extends GreedStrategy{ 
 	public int choose(GreedOption[] options, int[] dice, int bank) {
 	    	/*for (int a : dice) {
 	    		System.out.print(a);
@@ -83,5 +83,13 @@ public class OptimalStrategy extends GreedStrategy{
 		}
 		
 		return 0;
+    }
+    
+    public String playerName() {
+    	return "VempalleYuPawarGobbertGreedStrategy";
+    }
+    
+    public String author() {
+    	return "Arif Vempalle, Jason Yu, Neeraj Pawar, Elliot Gobbert";
     }
 }
